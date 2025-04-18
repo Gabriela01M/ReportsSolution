@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using DevExpress.ExpressApp.Xpo;
 using Reports_Solution.Blazor.Server.Services;
+using Reports_Solution.Module.BusinessObjects;
 
 namespace Reports_Solution.Blazor.Server;
 
@@ -31,7 +32,7 @@ public class Startup {
                 .AddConditionalAppearance()
                 .AddReports(options => {
                     options.EnableInplaceReports = true;
-                    options.ReportDataType = typeof(DevExpress.Persistent.BaseImpl.ReportDataV2);
+                    options.ReportDataType = typeof(ReportDataEditable);
                     options.ReportStoreMode = DevExpress.ExpressApp.ReportsV2.ReportStoreModes.XML;
                 })
                 .AddValidation(options => {

@@ -15,10 +15,9 @@ using DevExpress.Xpo;
 namespace Reports_Solution.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    
-    public class SubDivision : BaseObject
+    public class ReportDataEditable : ReportDataV2
     { 
-        public SubDivision(Session session)
+        public ReportDataEditable(Session session)
             : base(session)
         {
         }
@@ -28,24 +27,13 @@ namespace Reports_Solution.Module.BusinessObjects
             // Place your initialization code here (https://docs.devexpress.com/eXpressAppFramework/112834/getting-started/in-depth-tutorial-winforms-webforms/business-model-design/initialize-a-property-after-creating-an-object-xpo?v=22.1).
         }
 
-
-        ReportDataSource1 report;
-        bool inReport;
-        string name;
-
-        [Size(SizeAttribute.DefaultStringMappingFieldSize)]
-        public string Name
+        [Association("ReportDataEditable-Parameters"), DevExpress.Xpo.Aggregated]
+        public XPCollection<ReportParameterEditable> Parameters
         {
-            get => name;
-            set => SetPropertyValue(nameof(Name), ref name, value);
+            get
+            {
+                return GetCollection<ReportParameterEditable>(nameof(Parameters));
+            }
         }
-
-
-        public bool InReport
-        {
-            get => inReport;
-            set => SetPropertyValue(nameof(InReport), ref inReport, value);
-        }
-
     }
 }

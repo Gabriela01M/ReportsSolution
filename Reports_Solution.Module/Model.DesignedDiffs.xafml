@@ -1,8 +1,18 @@
-﻿<?xml version="1.0" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="Reports_Solution">
+  <NavigationItems>
+    <Items>
+      <Item Id="Reports">
+        <Items>
+          <Item Id="ShowAllReports" Caption="All Reports" IsNewNode="True" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
-  <Views>
-  </Views>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="24.2.3.0" IsNewNode="True" />
+  </SchemaModules>
 </Application>

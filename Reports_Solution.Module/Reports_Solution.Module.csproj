@@ -15,6 +15,7 @@
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DevExpress.Data" Version="24.2.3" />
     <PackageReference Include="DevExpress.ExpressApp" Version="24.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="24.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="24.2.3" />

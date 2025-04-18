@@ -9,6 +9,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Controllers\ViewController1.cs" />
+    <Compile Remove="Controllers\ViewController1.Designer.cs" />
+    <Compile Remove="Controllers\ViewController2.cs" />
+    <Compile Remove="Controllers\ViewController2.Designer.cs" />
+    <Compile Remove="Editors\TagBoxPropertyEditor.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Model.xafml" />
   </ItemGroup>
   <ItemGroup>
@@ -17,6 +24,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DevExpress.Data" Version="24.2.3" />
     <PackageReference Include="DevExpress.Drawing.Skia" Version="24.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="24.2.3" />
     <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="24.2.3" />
@@ -28,6 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="UnusableNodes.xml">
+      <DependentUpon>Model.xafml</DependentUpon>
+    </None>
+    <None Update="UnusableNodes1.xml">
+      <DependentUpon>Model.xafml</DependentUpon>
+    </None>
+    <None Update="UnusableNodes2.xml">
       <DependentUpon>Model.xafml</DependentUpon>
     </None>
   </ItemGroup>

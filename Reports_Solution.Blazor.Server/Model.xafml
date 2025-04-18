@@ -1,8 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
-  <NavigationItems NavigationStyle="Accordion" />
+  <BOModel>
+    <Class Name="Reports_Solution.Module.BusinessObjects.EditableReportParameter">
+      <OwnMembers>
+        <Member Name="PropertyToFilter" PropertyEditorType="DevExpress.ExpressApp.Blazor.Editors.StringPropertyEditor" ImmediatePostData="True" LookupEditorMode="Auto" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <NavigationItems NavigationStyle="Accordion">
+    <Items>
+      <Item Id="Reports">
+        <Items>
+          <Item Id="ShowAllReports" Caption="All Reports" ViewId="RunReportPlaceholder_ListView" IsNewNode="True" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
   <Options UIType="TabbedMDI" RestoreTabbedMdiLayout="True" ShowTabImage="True" />
   <SchemaModules>
     <SchemaModule Name="SystemModule" Version="24.2.3.0" IsNewNode="True" />
   </SchemaModules>
+  <Views>
+    <DetailView Id="EditableReportParameter_DetailView">
+      <Items>
+        <PropertyEditor Id="PropertyToFilter" PropertyEditorType="DevExpress.ExpressApp.Blazor.Editors.StringPropertyEditor" LookupEditorMode="Auto" />
+      </Items>
+    </DetailView>
+    <DetailView Id="ReportParameterEditable_DetailView">
+      <Items>
+        <PropertyEditor Id="PropertyToFilter" LookupEditorMode="AllItemsWithSearch" />
+      </Items>
+    </DetailView>
+    <ListView Id="RunReportPlaceholder_ListView" DetailViewID="" />
+  </Views>
 </Application>
