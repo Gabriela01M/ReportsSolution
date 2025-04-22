@@ -28,9 +28,6 @@ namespace Reports_Solution.Module.BusinessObjects
             // Place your initialization code here (https://docs.devexpress.com/eXpressAppFramework/112834/getting-started/in-depth-tutorial-winforms-webforms/business-model-design/initialize-a-property-after-creating-an-object-xpo?v=22.1).
         }
 
-
-        ReportDataSource1 report;
-        bool inReport;
         string name;
 
         [Size(SizeAttribute.DefaultStringMappingFieldSize)]
@@ -38,13 +35,6 @@ namespace Reports_Solution.Module.BusinessObjects
         {
             get => name;
             set => SetPropertyValue(nameof(Name), ref name, value);
-        }
-
-
-        public bool InReport
-        {
-            get => inReport;
-            set => SetPropertyValue(nameof(InReport), ref inReport, value);
         }
 
     }

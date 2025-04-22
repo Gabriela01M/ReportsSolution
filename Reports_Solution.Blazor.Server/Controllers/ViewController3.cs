@@ -53,12 +53,21 @@ namespace Reports_Solution.Blazor.Server.Controllers
       const string masterReportName = "Simple Static Report";
       IObjectSpace objectSpace = Application.CreateObjectSpace(typeof(ReportDataEditable));
 
-      // Obtener o crear el ReportDataEditable
-      var masterReportData = objectSpace.GetObjects<ReportDataEditable>()
-          .FirstOrDefault(r => r.DisplayName == masterReportName)
-          ?? objectSpace.CreateObject<ReportDataEditable>();
 
-      // Crear nuevo reporte
+      var masterReportData = objectSpace.GetObjects<ReportDataEditable>()
+          .FirstOrDefault(r => r.DisplayName == masterReportName);
+
+
+      if (masterReportData == null)
+      {
+        masterReportData = objectSpace.CreateObject<ReportDataEditable>();
+      }
+      else
+      {
+        masterReportData.HideReport = true;
+      }
+
+
       XtraReport masterReport = new XtraReport()
       {
         DisplayName = masterReportName,
@@ -70,24 +79,27 @@ namespace Reports_Solution.Blazor.Server.Controllers
       var detailBand = new DetailBand() { HeightF = 100 };
       masterReport.Bands.Add(detailBand);
 
+      
+      masterReport.Bands.Clear(); 
+      masterReport.Bands.Add(detailBand);
+
       float currentTop = 0;
 
-      // Obtener todos los subreportes (excluyendo el maestro)
       var allReports = objectSpace.GetObjects<ReportDataEditable>()
           .Where(r => r.DisplayName != masterReportName)
           .ToList();
 
+      
       foreach (var reportData in allReports)
       {
         using var subStream = new MemoryStream(reportData.Content);
         XtraReport subreport = new XtraReport();
         subreport.LoadLayoutFromXml(subStream);
 
-        // Crear una banda separada para cada subreporte
         var groupBand = new GroupHeaderBand()
         {
           HeightF = 300,
-          PageBreak = PageBreak.AfterBand // Aquí está el salto de página correcto
+          PageBreak = PageBreak.AfterBand
         };
 
         XRSubreport subreportControl = new XRSubreport()
@@ -100,18 +112,18 @@ namespace Reports_Solution.Blazor.Server.Controllers
         masterReport.Bands.Add(groupBand);
       }
 
-
-      // Guardar nuevo layout en el objeto existente
+    
       masterReportData.DisplayName = masterReport.DisplayName;
       masterReportData.IsInplaceReport = false;
 
+      
       using var saveStream = new MemoryStream();
       masterReport.SaveLayoutToXml(saveStream);
       masterReportData.Content = saveStream.ToArray();
 
       objectSpace.CommitChanges();
 
-      // Mostrar vista previa
+      
       var reportStorage = Application.ServiceProvider.GetRequiredService<IReportStorage>();
       string handle = reportStorage.GetReportContainerHandle(masterReportData);
 

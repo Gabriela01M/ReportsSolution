@@ -9,6 +9,13 @@
   </BOModel>
   <NavigationItems NavigationStyle="Accordion">
     <Items>
+      <Item Id="Default">
+        <Items>
+          <Item Id="Company_ListView" Removed="True" />
+          <Item Id="Division_ListView" Removed="True" />
+          <Item Id="ReportDataEditable_ListView" Removed="True" />
+        </Items>
+      </Item>
       <Item Id="Reports">
         <Items>
           <Item Id="ShowAllReports" Caption="All Reports" ViewId="RunReportPlaceholder_ListView" IsNewNode="True" />

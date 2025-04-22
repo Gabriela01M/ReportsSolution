@@ -25,9 +25,19 @@ namespace Reports_Solution.Module.BusinessObjects
         {
             base.AfterConstruction();
             // Place your initialization code here (https://docs.devexpress.com/eXpressAppFramework/112834/getting-started/in-depth-tutorial-winforms-webforms/business-model-design/initialize-a-property-after-creating-an-object-xpo?v=22.1).
+            this.HideReport = false;
         }
 
-        [Association("ReportDataEditable-Parameters"), DevExpress.Xpo.Aggregated]
+
+    bool hideReport;
+    [Browsable(false)]
+    public bool HideReport
+    {
+      get => hideReport;
+      set => SetPropertyValue(nameof(HideReport), ref hideReport, value);
+    }
+
+    [Association("ReportDataEditable-Parameters"), DevExpress.Xpo.Aggregated]
         public XPCollection<ReportParameterEditable> Parameters
         {
             get
