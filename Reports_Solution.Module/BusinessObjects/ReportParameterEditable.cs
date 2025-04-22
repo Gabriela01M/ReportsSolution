@@ -58,6 +58,7 @@ namespace Reports_Solution.Module.BusinessObjects
       set => SetPropertyValue(nameof(Report), ref report, value);
     }
 
+    [Required]
     public ParameterType ParameterType
     {
       get => parameterType;
@@ -66,6 +67,8 @@ namespace Reports_Solution.Module.BusinessObjects
 
 
     [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+    [RuleRegularExpression("Name_NoSpaces",DefaultContexts.Save,@"^\S+$", CustomMessageTemplate = "Name can not have spaces")]
+    [RuleRequiredField("Name_Required",DefaultContexts.Save, CustomMessageTemplate = "Name is required")]
     public string Name
     {
       get => name;
@@ -74,6 +77,7 @@ namespace Reports_Solution.Module.BusinessObjects
 
 
     [Size(SizeAttribute.DefaultStringMappingFieldSize)]
+    [XafDisplayName("Parameter Value")]
     public string PropertyParameterValue
     {
       get => propertyParameterValue;
@@ -112,7 +116,7 @@ namespace Reports_Solution.Module.BusinessObjects
 
 
     [NonPersistent]
-
+    [VisibleInDetailView(false), VisibleInListView(false), VisibleInLookupListView(false)]
     public List<string> AvailableProperties
     {
       get
@@ -128,7 +132,7 @@ namespace Reports_Solution.Module.BusinessObjects
         if (targetType == null)
           return new List<string>();
 
-        return targetType
+        var declaredProperties = targetType
             .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
             .Where(p =>
                 p.PropertyType == typeof(string) ||
@@ -137,6 +141,17 @@ namespace Reports_Solution.Module.BusinessObjects
                 p.PropertyType == typeof(bool))
             .Select(p => p.Name)
             .ToList();
+
+        return declaredProperties;
+      }
+    }
+
+    protected override void OnChanged(string propertyName, object oldValue, object newValue)
+    {
+      base.OnChanged(propertyName, oldValue, newValue);
+      if (propertyName == "Name")
+      {
+        this.FilterExpression = string.Format("{0} = [Value]", this.Name);
       }
     }
   }

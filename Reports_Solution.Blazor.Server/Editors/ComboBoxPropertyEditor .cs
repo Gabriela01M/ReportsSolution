@@ -9,6 +9,7 @@ using DevExpress.ExpressApp.Blazor.Components;
 using System.Reflection;
 using DevExpress.ExpressApp.Blazor.Editors.Adapters;
 using DevExpress.ExpressApp.Blazor.Components.Models;
+using DevExpress.XtraReports;
 
 namespace Reports_Solution.Blazor.Server.Editors
 {
@@ -44,18 +45,24 @@ namespace Reports_Solution.Blazor.Server.Editors
       }
 
       Type targetType = Type.GetType(reportParameter.Report.DataTypeName)
-          ?? AppDomain.CurrentDomain.GetAssemblies()
-              .SelectMany(a => a.GetTypes())
-              .FirstOrDefault(t => t.FullName == reportParameter.Report.DataTypeName);
+            ?? AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .FirstOrDefault(t => t.FullName == reportParameter.Report.DataTypeName);
 
       if (targetType == null)
-      {
-        return new List<string> { "No se encontró tipo de datos" };
-      }
+        return new List<string>();
 
-      return targetType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                       .Select(p => p.Name)
-                       .ToList();
+      var declaredProperties = targetType
+          .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+          .Where(p =>
+              p.PropertyType == typeof(string) ||
+              p.PropertyType == typeof(DateTime) ||
+              p.PropertyType == typeof(int) ||
+              p.PropertyType == typeof(bool))
+          .Select(p => p.Name)
+          .ToList();
+
+      return declaredProperties;
     }
   }
 }

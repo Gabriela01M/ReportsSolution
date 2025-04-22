@@ -157,7 +157,7 @@ namespace Reports_Solution.Blazor.Server.Controllers
 
             if (!string.IsNullOrEmpty(param.FilterExpression))
             {
-              string filterCondition;
+              string filterCondition = string.Empty;
 
               if (param.FilterExpression.Contains("[Value]"))
               {
@@ -165,7 +165,7 @@ namespace Reports_Solution.Blazor.Server.Controllers
               }
               else
               {
-                filterCondition = $"{param.FilterExpression} ?{param.Name}";
+                filterCondition = param.FilterExpression;
               }
 
               if (filterBuilder.Length > 0)
